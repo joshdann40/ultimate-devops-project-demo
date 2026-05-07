@@ -1,11 +1,11 @@
-# My Work Log
+# DevOps Notes
 
-This file tracks the changes I made after duplicating the upstream demo into my
-own GitHub repository.
+This file tracks the DevOps-focused changes made after duplicating the upstream
+demo into my own GitHub repository.
 
 ## Completed
 
-- Created a personal GitHub repository named `utlimate-devops-project-demo`.
+- Created a personal GitHub repository named `ultimate-devops-project-demo`.
 - Preserved the original project history and kept the original repository as
   `upstream`.
 - Rewrote the root README so the project is presented as a DevOps portfolio
@@ -17,16 +17,20 @@ own GitHub repository.
 - Strengthened the README with fork disclosure, resume summary, reverse proxy
   explanation, and clearer DevOps ownership.
 
+## Evidence To Add
+
+- Docker Compose local run screenshot.
+- Grafana or observability dashboard screenshot.
+- Kubernetes pod status screenshot from a local cluster.
+
 ## Next Improvements
 
-- Run the project locally with Docker Compose and add screenshots.
-- Deploy the Kubernetes manifests to a local cluster and document the result.
 - Add resource requests and limits to selected services.
 - Add namespace support for cleaner Kubernetes deployment.
 - Add a GitOps workflow using Argo CD or Flux.
 - Expand CI checks beyond the product catalog service.
 
-## Interview Talking Points
+## Interview Discussion Notes
 
 - I used an existing open-source microservices demo as the base, then adapted it
   into a personal DevOps project.

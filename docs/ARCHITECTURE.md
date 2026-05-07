@@ -1,9 +1,8 @@
 # Architecture Notes
 
-This project is a fork-based microservices demo adapted into a DevOps portfolio
-project. The main value is not claiming ownership of the original application
-code. The value is showing how a realistic distributed system is packaged,
-deployed, routed, observed, and documented.
+This project demonstrates DevOps engineering practices on top of a realistic
+distributed system: packaging, deployment, CI/CD, reverse proxy routing, and
+observability.
 
 ## Service Groups
 

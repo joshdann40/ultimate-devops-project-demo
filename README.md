@@ -1,4 +1,4 @@
-# Utlimate DevOps Project Demo
+# Ultimate DevOps Project Demo
 
 Production-style DevOps portfolio project for deploying and operating a
 microservices application with Docker, Kubernetes, GitHub Actions, reverse
@@ -49,7 +49,7 @@ More detail:
 
 - [Architecture notes](docs/ARCHITECTURE.md)
 - [Runbook](docs/RUNBOOK.md)
-- [My work log](docs/MY-WORK.md)
+- [DevOps notes](docs/DEVOPS-NOTES.md)
 
 ## Repository layout
 
