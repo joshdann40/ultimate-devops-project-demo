@@ -14,6 +14,8 @@ own GitHub repository.
 - Added a runbook with local Docker, Kubernetes, and CI validation commands.
 - Updated CI attribution to use the GitHub Actions bot identity.
 - Ignored Windows `desktop.ini` metadata files.
+- Strengthened the README with fork disclosure, resume summary, reverse proxy
+  explanation, and clearer DevOps ownership.
 
 ## Next Improvements
 
@@ -29,6 +31,8 @@ own GitHub repository.
 - I used an existing open-source microservices demo as the base, then adapted it
   into a personal DevOps project.
 - I can explain the service topology, deployment options, and CI workflow.
+- I can explain how the Envoy frontend proxy acts as the application entrypoint
+  in both Docker Compose and Kubernetes.
 - I understand the difference between application code ownership and DevOps
   ownership: my focus is packaging, deployment, validation, and operations.
 - I kept attribution and licensing intact while making the project easier to

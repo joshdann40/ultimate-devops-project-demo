@@ -1,9 +1,9 @@
 # Architecture Notes
 
-This project is a microservices demo application designed to feel close to a
-real production platform. The main value for a DevOps portfolio is not the
-business domain itself, but the operational surface area: containers,
-orchestration, CI, service discovery, telemetry, and repeatable deployment.
+This project is a fork-based microservices demo adapted into a DevOps portfolio
+project. The main value is not claiming ownership of the original application
+code. The value is showing how a realistic distributed system is packaged,
+deployed, routed, observed, and documented.
 
 ## Service Groups
 
@@ -34,6 +34,27 @@ orchestration, CI, service discovery, telemetry, and repeatable deployment.
 - `flagd`: feature flag service.
 - `loadgenerator`: synthetic traffic generator.
 - OpenTelemetry components configured through the compose and manifest files.
+
+## Reverse Proxy
+
+The `frontendproxy` component is the public entrypoint for the application. It
+uses Envoy to route traffic to the frontend and related platform endpoints.
+
+In Docker Compose, the service is named `frontend-proxy` and exposes the Envoy
+listener and admin ports from environment variables.
+
+In Kubernetes, the service is named `opentelemetry-demo-frontendproxy`. The
+ingress manifest forwards external HTTP traffic to this service on port `8080`.
+This keeps internal services behind the cluster network and gives the platform a
+single routing point for external access.
+
+This is useful in a DevOps context because a reverse proxy can centralize:
+
+- External routing.
+- Path-based service access.
+- TLS termination when configured with a real ingress controller.
+- Traffic policy.
+- Observability at the edge of the application.
 
 ## Deployment Layout
 
@@ -66,4 +87,5 @@ Future improvements should expand the same pattern to other services:
 - Understanding container build contexts.
 - Managing Kubernetes deployment and service manifests.
 - Wiring CI to tests, image publishing, and deployment manifest updates.
+- Explaining the reverse proxy as the external entrypoint.
 - Preserving upstream attribution while making project-specific changes.

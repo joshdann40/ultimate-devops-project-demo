@@ -1,93 +1,169 @@
 # Utlimate DevOps Project Demo
 
-A portfolio DevOps project based on the OpenTelemetry Astronomy Shop demo. This
-repository is my working version of a production-style microservices platform:
-containerized services, Kubernetes manifests, GitHub Actions CI, and
-observability-focused runtime configuration.
+Production-style DevOps portfolio project for deploying and operating a
+microservices application with Docker, Kubernetes, GitHub Actions, reverse
+proxying, and OpenTelemetry-based observability.
 
-## What this project demonstrates
+> Fork disclosure: this repository is based on
+> `iam-veeramalla/ultimate-devops-project-demo`, which itself is based on the
+> OpenTelemetry Astronomy Shop demo. My work focuses on DevOps engineering:
+> documentation, CI/CD, deployment flow, reverse proxy architecture, operations,
+> and portfolio-ready project ownership.
 
-- Multi-service application deployment with Docker Compose and Kubernetes.
-- CI for the product catalog service, including build, unit test, lint, image
-  build, and Kubernetes manifest update steps.
-- Service-to-service architecture using several implementation languages.
-- Practical observability concepts with OpenTelemetry instrumentation.
-- A maintainable project structure that can be extended for cloud deployment,
-  monitoring, and GitOps workflows.
+## Why this project exists
 
-## My customization work
+This project is designed to show practical DevOps skills on top of a realistic
+microservices system. Instead of a small single-service demo, it uses a larger
+distributed application with many moving parts, which creates a better surface
+for deployment, automation, troubleshooting, and observability work.
 
-This repo started from an existing open-source demo, then I adapted it into a
-personal DevOps portfolio project. My current changes focus on making the
-project understandable, reviewable, and ready for further hands-on deployment
-work.
+## DevOps skills demonstrated
 
-- Reframed the README around DevOps portfolio usage.
-- Added project-specific architecture notes in `docs/ARCHITECTURE.md`.
-- Added a hands-on runbook in `docs/RUNBOOK.md`.
-- Added a personal change log in `docs/MY-WORK.md`.
-- Cleaned the CI bot identity so automated commits are not attributed to the
-  original tutorial author.
-- Added Windows metadata ignores for a cleaner working tree.
+- Container-based local development with Docker Compose.
+- Kubernetes deployment structure using separate service manifests.
+- Reverse proxy entrypoint with Envoy for routing frontend and platform traffic.
+- GitHub Actions CI for build, test, lint, Docker image publishing, and manifest
+  updates.
+- Multi-service architecture awareness across frontend, backend, data,
+  messaging, and support services.
+- Operational documentation through runbooks, architecture notes, and change
+  tracking.
+- Clean fork attribution and project ownership without misrepresenting upstream
+  application code.
 
-## Architecture at a glance
+## Architecture summary
 
-The application is a distributed e-commerce demo. The frontend talks to backend
-services for product catalog, cart, checkout, currency, payment, shipping,
-recommendations, advertising, and related support services. Supporting
-infrastructure includes Kafka, Valkey, feature flags, load generation, and
-OpenTelemetry components.
+The application is a distributed e-commerce demo. A frontend service communicates
+with backend services for product catalog, cart, checkout, payment, shipping,
+currency, recommendations, ads, email, accounting, and fraud detection.
 
-See `docs/ARCHITECTURE.md` for the fuller service map and deployment notes.
+Platform components include Kafka, Valkey, feature flags, load generation,
+OpenTelemetry collectors, and a frontend reverse proxy.
 
-## Local quick start
+The reverse proxy is important because it acts as the single entrypoint for user
+traffic and routes requests to internal services. In Kubernetes, ingress traffic
+targets the `opentelemetry-demo-frontendproxy` service, keeping internal service
+addresses away from external users.
 
-Docker is the fastest way to run the full environment locally:
+More detail:
 
-```bash
-docker compose up --build
+- [Architecture notes](docs/ARCHITECTURE.md)
+- [Runbook](docs/RUNBOOK.md)
+- [My work log](docs/MY-WORK.md)
+
+## Repository layout
+
+```text
+.
+|-- .github/workflows/        # GitHub Actions CI workflow
+|-- docker-compose.yml        # Full local multi-service environment
+|-- docker-compose.minimal.yml # Smaller local environment
+|-- kubernetes/               # Kubernetes deployment and service manifests
+|-- src/                      # Microservice source code
+|-- docs/                     # Portfolio documentation and runbooks
+|-- pb/                       # Shared protobuf definitions
+`-- test/                     # Test and validation assets
 ```
 
-For a smaller local stack:
+## CI/CD workflow
 
-```bash
-docker compose -f docker-compose.minimal.yml up --build
-```
+The current workflow targets the product catalog service and performs:
 
-Kubernetes manifests are available under `kubernetes/`. See `docs/RUNBOOK.md`
-for suggested validation commands and troubleshooting notes.
-
-## CI/CD
-
-The workflow in `.github/workflows/ci.yaml` currently targets the
-`src/product-catalog` service. It performs:
-
-1. Go dependency download and build.
+1. Go build.
 2. Unit tests.
 3. Go linting.
 4. Docker image build and push.
 5. Kubernetes deployment image tag update.
 
-To use the Docker push step, configure these repository secrets:
+To use the Docker publishing step, configure these repository secrets:
 
 - `DOCKER_USERNAME`
 - `DOCKER_TOKEN`
 
-## Roadmap
+The workflow is intentionally scoped to one service first. That makes it easier
+to demonstrate a clean CI/CD path before expanding the same pattern to the rest
+of the platform.
 
-- Add a Kubernetes namespace and environment overlay for a personal deployment.
-- Add screenshots of a successful local run and observability views.
-- Add service health checks and resource requests/limits where missing.
-- Add a GitOps deployment path with Argo CD or Flux.
-- Add a short incident runbook for common service failures.
+## Local quick start
 
-## Attribution
+Start the complete stack:
 
-This project is based on:
+```bash
+docker compose up --build
+```
+
+Start the smaller stack:
+
+```bash
+docker compose -f docker-compose.minimal.yml up --build
+```
+
+Check running containers:
+
+```bash
+docker compose ps
+```
+
+Stop the environment:
+
+```bash
+docker compose down
+```
+
+## Kubernetes quick start
+
+Apply the Kubernetes resources:
+
+```bash
+kubectl apply -f kubernetes/serviceaccount.yaml
+kubectl apply -f kubernetes/
+```
+
+Check workloads:
+
+```bash
+kubectl get pods
+kubectl get svc
+kubectl get deploy
+```
+
+The Kubernetes ingress in `kubernetes/frontendproxy/ingress.yaml` routes
+external HTTP traffic to the frontend proxy service.
+
+## What I changed after forking
+
+- Reworked the README into a portfolio-grade project overview.
+- Added architecture documentation.
+- Added an operational runbook.
+- Added a personal work log with next improvements and interview talking points.
+- Cleaned GitHub Actions bot attribution.
+- Added Windows metadata ignores.
+- Documented the reverse proxy role clearly for reviewers and interviews.
+
+## Planned improvements
+
+- Rename the repository to a shorter resume-friendly URL.
+- Add screenshots of the local app and observability views.
+- Add Kubernetes namespace and environment overlays.
+- Add resource requests and limits to selected workloads.
+- Add GitOps deployment with Argo CD or Flux.
+- Expand CI/CD beyond the product catalog service.
+- Add smoke tests for the frontend and key APIs.
+
+## Resume summary
+
+DevOps portfolio project based on a forked OpenTelemetry microservices demo;
+customized CI/CD, Docker Compose, Kubernetes manifests, reverse proxy routing,
+and operational documentation to demonstrate deployment and platform engineering
+skills.
+
+## Attribution and license
+
+This repository is a fork-based portfolio project. Original project sources:
 
 - `iam-veeramalla/ultimate-devops-project-demo`
-- The OpenTelemetry Demo / Astronomy Shop project
+- OpenTelemetry Demo / Astronomy Shop
 
-The original OpenTelemetry Demo is licensed under Apache 2.0. I am keeping the
-license and attribution intact while using this repository as a personal DevOps
-learning and portfolio project.
+The original OpenTelemetry Demo is licensed under Apache 2.0. This repository
+keeps the original license and attribution intact while documenting my DevOps
+customization work separately.
