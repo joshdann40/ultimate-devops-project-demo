@@ -1,4 +1,4 @@
-# Service Testing
+# Service Testing.
 
 The OpenTelemetry Demo uses traced-based testing to validate the
 functionality of the services and the traces they generate.
